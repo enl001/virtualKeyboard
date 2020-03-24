@@ -1,0 +1,26 @@
+{
+  "name": "virtualKeyboard",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "script.js",
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enl001/virtualKeyboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enl001/virtualKeyboard/issues"
+  },
+  "homepage": "https://github.com/enl001/virtualKeyboard#readme"
+}
