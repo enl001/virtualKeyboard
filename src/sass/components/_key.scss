@@ -22,22 +22,22 @@
   }
 
   // key width
-  .key_medium {
+  &_medium {
     width: 12%;
     max-width: 90px;
   }
-  .key_wide {
+  &_wide {
     width: 18%;
     max-width: 135px;
   }
 
-  .key_extra-wide {
+  &_extra-wide {
     width: 36%;
     max-width: 270px;
   }
 
   // dot on activatable keys
-  .key_activatable:after {
+  &_activatable:after {
     content: '';
     position: absolute;
     top: 10px;
@@ -48,7 +48,7 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  .key_active:after {
+  &_active:after {
     content: '';
     background-color: #05ff00;
   }

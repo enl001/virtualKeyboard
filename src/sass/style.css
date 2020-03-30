@@ -41,19 +41,19 @@ body {
   background-color: #29675a;
   box-shadow: 2px 2px 1px #053128;
 }
-.key .key_medium {
+.key_medium {
   width: 12%;
   max-width: 90px;
 }
-.key .key_wide {
+.key_wide {
   width: 18%;
   max-width: 135px;
 }
-.key .key_extra-wide {
+.key_extra-wide {
   width: 36%;
   max-width: 270px;
 }
-.key .key_activatable:after {
+.key_activatable:after {
   content: "";
   position: absolute;
   top: 10px;
@@ -63,9 +63,16 @@ body {
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.4);
 }
-.key .key_active:after {
+.key_active:after {
   content: "";
   background-color: #05ff00;
+}
+
+.textarea {
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
+  height: 200px;
 }
 
 .wrapper {
