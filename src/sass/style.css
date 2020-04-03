@@ -37,7 +37,7 @@ body {
   justify-content: center;
   vertical-align: top;
 }
-.key:active {
+.key:active, .key_active {
   background-color: #29675a;
   box-shadow: 2px 2px 1px #053128;
 }
@@ -63,7 +63,7 @@ body {
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.4);
 }
-.key_active:after {
+.key_activatable_active:after {
   content: "";
   background-color: #05ff00;
 }
