@@ -7,6 +7,7 @@ export const createDomTree = () => {
   const footer = document.createElement('footer');
   const div = document.createElement('div');
   const textarea = document.createElement('textarea');
+  const textarea1 = document.createElement('textarea');
   div.classList.add('wrapper');
   header.classList.add('header');
   header.append(div);
@@ -27,8 +28,11 @@ export const createDomTree = () => {
   document.body.append(footer);
   
   textarea.classList.add('textarea', 'use-keyboard-input');
+  textarea1.classList.add('textarea', 'use-keyboard-input');
   document.querySelector('.screen > .wrapper')
           .appendChild(textarea);
+  // document.querySelector('.screen > .wrapper')
+  //         .appendChild(textarea1);
 
 };
 

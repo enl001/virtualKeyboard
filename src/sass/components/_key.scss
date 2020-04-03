@@ -1,11 +1,11 @@
 .key {
   position: relative;
   display: inline-flex;
-  background-color: #3e9b88;
-  color: #ffffff;
-  border: 1px solid #053128;
+  background-color: $key-background;
+  color: $key-color;
+  border: 1px solid $key-border-color;
   border-radius: 4px;
-  box-shadow: 4px 4px 2px #053128;
+  box-shadow: 4px 4px 2px $key-shadow;
   margin: 4px;
   height: 45px;
   width: 6%;
@@ -15,10 +15,13 @@
   justify-content: center;
   vertical-align: top;
 
+  font-size: 25px;
+  font-weight: 500;
+
   // pressed
   &:active, &_active {
-    background-color: #29675a;
-    box-shadow: 2px 2px 1px #053128;
+    background-color: $key-background-active;
+    box-shadow: 2px 2px 1px $key-shadow-active;
   }
 
 
@@ -53,7 +56,7 @@
 
     &_active:after {
       content: '';
-      background-color: #05ff00;
+      background-color: $key-activatable-color;
     }
   }
 

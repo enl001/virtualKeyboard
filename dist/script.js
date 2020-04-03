@@ -141,6 +141,7 @@ const createDomTree = () => {
   const footer = document.createElement('footer');
   const div = document.createElement('div');
   const textarea = document.createElement('textarea');
+  const textarea1 = document.createElement('textarea');
   div.classList.add('wrapper');
   header.classList.add('header');
   header.append(div);
@@ -161,8 +162,11 @@ const createDomTree = () => {
   document.body.append(footer);
   
   textarea.classList.add('textarea', 'use-keyboard-input');
+  textarea1.classList.add('textarea', 'use-keyboard-input');
   document.querySelector('.screen > .wrapper')
           .appendChild(textarea);
+  // document.querySelector('.screen > .wrapper')
+  //         .appendChild(textarea1);
 
 };
 
@@ -205,8 +209,10 @@ const Keyboard = {
   properties: {
     value: '',
     isOpen: false,
-    capsLock: false,
-    brackingElements : ['backspace', ']', 'enter', 'arrowUp']
+    capsLock: false,  // caps lock status to toggle case
+    shift : false,    // shift status to toggle case
+    shiftDown :false, // shift status to allow click shift + key by mouse
+    brackingElements : ['backspace', 'Del', 'enter', 'arrowUp']
   },
 
   init(container) {
@@ -254,8 +260,10 @@ const Keyboard = {
       '6':'Digit6',
       '7':'Digit7',
       '8':'Digit8',
-      '9':'Digit9',
+      '9':'Digit9',      
       '0':'Digit0',
+      '-':'Minus',
+      '=':'Equal',
       'backspace':'Backspace',
       'Tab':'Tab',
       'q':'KeyQ',
@@ -270,6 +278,7 @@ const Keyboard = {
       'p':'KeyP',
       '[':'BracketLeft',
       ']':'BracketRight',
+      'Del':'Delete',
       'caps':'CapsLock',
       'a':'KeyA',
       's':'KeyS',
@@ -305,7 +314,6 @@ const Keyboard = {
       'arrowLeft':'ArrowLeft',
       'arrowDown':'ArrowDown',
       'arrowRight':'ArrowRight'
-
     };
 
     // create HTML for an icon
@@ -321,7 +329,7 @@ const Keyboard = {
 
       //add classes
       keyElement.classList.add('key');
-
+      // special keys
       switch (key) {
         case 'backspace':
           keyElement.classList.add('key_medium', 'special');
@@ -341,6 +349,7 @@ const Keyboard = {
           keyElement.appendChild(keyContent);
           keyElement.addEventListener('click', () => {
             this._toggleCapsLock();
+            
             keyElement.classList.toggle('key_activatable_active', this.properties.capsLock);
           });
 
@@ -382,7 +391,25 @@ const Keyboard = {
         case 'ShiftL':  
         case 'ShiftR':
           keyElement.classList.add('key_medium','special');
-          keyContent.textContent = key.substring(0,key.length-1);            
+          keyContent.textContent = key.substring(0,key.length-1);  
+          keyElement.addEventListener('mousedown', () => {
+            // cant press shift if it is pressed already
+            if (!this.shiftDown) {
+              this._toggleShift();
+              this.shiftDown = true;
+              keyElement.classList.add('key_active');
+            }
+            
+          });   
+          keyElement.addEventListener('mouseup', () => { 
+            // cant press shift if it is pressed already
+            if (this.shiftDown) {
+              this._toggleShift();
+              this.shiftDown = false;
+              keyElement.classList.remove('key_active');
+            }
+          });  
+               
 
         break;
         case 'Ctrl':
@@ -395,6 +422,13 @@ const Keyboard = {
         case 'AltR':
           keyElement.classList.add('key_medium','special');
           keyContent.textContent = key.substring(0,key.length-1);  
+          
+
+        break;
+
+        case 'Del':
+          keyElement.classList.add('special');
+          keyContent.textContent = key;  
           
 
         break;
@@ -451,10 +485,19 @@ const Keyboard = {
           keyContent.textContent = key.toLowerCase();
 
           keyElement.addEventListener('click', () => {
-            this.properties.value += this.properties.capsLock
+            
+            
+            this.properties.value += 
+            (this.properties.capsLock ^ this.properties.shift)
               ? key.toUpperCase()
               : key.toLowerCase();
             this._triggerEvent('onInput');
+
+          // if(this.shiftDown) 
+          //   {
+          //   this._toggleShift();
+          //   this.shiftDown = false;
+          //   }
           });
 
           break;
@@ -481,12 +524,26 @@ const Keyboard = {
     
     for (const key of this.elements.keys){
       if(!key.classList.contains('special')) {
-        key.children[0].textContent = this.properties.capsLock ? 
+        key.children[0].textContent = 
+        (this.properties.capsLock ^ this.properties.shift) ? 
         key.children[0].textContent.toUpperCase() : 
         key.children[0].textContent.toLowerCase();
       }
     }
   },
+
+  _toggleShift() {    
+    this.properties.shift = !this.properties.shift;
+    
+    for (const key of this.elements.keys){
+      if(!key.classList.contains('special')) {
+        key.children[0].textContent = 
+        (this.properties.capsLock ^ this.properties.shift) ? 
+        key.children[0].textContent.toUpperCase() : 
+        key.children[0].textContent.toLowerCase();
+      }
+    }
+  },  
 
   animateKeyDown(key){
     key.classList.add('key_active');
@@ -532,15 +589,31 @@ const Keyboard = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "keyboardEventHandler", function() { return keyboardEventHandler; });
 const keyboardEventHandler = (keyboard) => {
-  console.log(keyboard);
+  
   window.addEventListener('keydown', (event) => {
   if(keyboard.properties.isOpen) {
+    
     event.preventDefault();    
     let element = document.getElementById(event.code);
-    if(element) { 
+    if(element) {       
       keyboard.animateKeyDown(element);   
-      element.dispatchEvent(new Event('click')); 
+      switch (element.id) {
+        case 'ShiftRight' :
+        case 'ShiftLeft' :
+        // to prevent multiple event triggering
+        if(!keyboard.properties.shift) {
+          element.dispatchEvent(new Event('mousedown'));
+        }
+          break;
+
+        default:
+          element.dispatchEvent(new Event('click'));
+          break;
+
+      }
+       
     }
+
   }
   });
   window.addEventListener('keyup', (event) => {
@@ -548,7 +621,18 @@ const keyboardEventHandler = (keyboard) => {
       event.preventDefault();      
       let element = document.getElementById(event.code);
       if(element) {        
-        keyboard.animateKeyUp(element);     
+        keyboard.animateKeyUp(element);  
+        switch (element.id) {
+          case 'ShiftRight' :
+          case 'ShiftLeft' :
+            element.dispatchEvent(new Event('mouseup'));
+            break;
+  
+          default:
+            
+            break;
+  
+        }   
       }
     }
     });  

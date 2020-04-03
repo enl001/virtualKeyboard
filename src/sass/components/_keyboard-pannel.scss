@@ -1,11 +1,15 @@
 .keyboard-pannel{
   position: fixed;
+  
+
   left: 0;
   bottom: 0;
   width: 100%;
   padding: 5px 0;
-  background-color: #004134;
-  box-shadow: 0 0 50px rgba(0,0,0.5);
+  border: 2px solid $keyboard-border-color;
+  border-radius: 20px;
+  background-color: $keyboard-background;
+  box-shadow: 0 0 50px $keyboard-shadow;
   user-select: none;
   transition: bottom 0.5s;
 
