@@ -28,11 +28,11 @@ export const createDomTree = () => {
   document.body.append(footer);
   
   textarea.classList.add('textarea', 'use-keyboard-input');
-  textarea1.classList.add('textarea', 'use-keyboard-input');
+  textarea1.classList.add('textarea');
   document.querySelector('.screen > .wrapper')
           .appendChild(textarea);
-  // document.querySelector('.screen > .wrapper')
-  //         .appendChild(textarea1);
+  document.querySelector('.screen > .wrapper')
+          .appendChild(textarea1);
 
 };
 

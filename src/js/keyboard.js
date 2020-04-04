@@ -1,4 +1,7 @@
 import {keyboardEventHandler} from './keyboardEventHandler';
+import {keyboardLayoutEnRu} from './keyboardLayoutEnRu';
+import {brakingElementsArr} from './keyboardLayoutEnRu';
+import {languagesArr} from './keyboardLayoutEnRu';
 
 export const Keyboard = {
   elements: {
@@ -18,16 +21,18 @@ export const Keyboard = {
     capsLock: false,  // caps lock status to toggle case
     shift : false,    // shift status to toggle case
     shiftDown :false, // shift status to allow click shift + key by mouse
-    brakingElements : ['Backspace', 'Delete', 'Enter', 'ArrowUp'],
-    lang:'En',
+    brakingElements : brakingElementsArr,
+    languages : languagesArr,
+    currentLang:'En',
     alt:'Alt',
-    langIndex: {'En':0, 'EnAlt':1, 'Ru':2, 'RuAlt':3}
+    langIndex: {'En':0, 'EnAlt':1, 'Ru':2, 'RuAlt':3},
+    keyLayout : keyboardLayoutEnRu 
   },
 
-  init(container, lang) {
+  init(container, currentLang) {
     // create keyboard
-    this.properties.lang = lang;
-    console.log('init with lang ' + lang);
+    this.properties.currentLang = currentLang;
+    console.log('init with currentLang ' + currentLang);
     this.elements.main = document.createElement('div');
     this.elements.keyboardContainer = document.createElement('div');
 
@@ -60,81 +65,17 @@ export const Keyboard = {
 
   _createKeys() {
     const fragment = document.createDocumentFragment();
-    const keyLayout = {      
-      'Backquote'   : ['\`', '~',  'ё',  'Ё'],
-      'Digit1'      : ['1',  '!',  '1',  '!'],
-      'Digit2'      : ['2',  '@',  '2',  '\"'],
-      'Digit3'      : ['3',  '#',  '3',  '№'],
-      'Digit4'      : ['4',  '$',  '4',  ';'],
-      'Digit5'      : ['5',  '%',  '5',  '%'],
-      'Digit6'      : ['6',  '^',  '6',  ':'],
-      'Digit7'      : ['7',  '&',  '7',  '?'],
-      'Digit8'      : ['8',  '*',  '8',  '*'],
-      'Digit9'      : ['9',  '(',  '9',  '('],      
-      'Digit0'      : ['0',  ')',  '0',  ')'],
-      'Minus'       : ['-',  '_',  '-',  '_'],
-      'Equal'       : ['=',  '+',  '=',  '+'],
-      'Backspace'   : ['Backspace',  'Backspace',  'Backspace',  'Backspace'],
-      'Tab'         : ['Tab',  'Tab',  'Tab',  'Tab'],
-      'KeyQ'        : ['q',  'Q',  'й',  'Й'],
-      'KeyW'        : ['w',  'W',  'ц',  'Ц'],
-      'KeyE'        : ['e',  'E',  'у',  'У'],
-      'KeyR'        : ['r',  'R',  'к',  'К'],
-      'KeyT'        : ['t',  'T',  'е',  'Е'],
-      'KeyY'        : ['y',  'Y',  'н',  'Н'],
-      'KeyU'        : ['u',  'U',  'г',  'Г'],
-      'KeyI'        : ['i',  'I',  'ш',  'Ш'],
-      'KeyO'        : ['o',  'O',  'щ',  'Щ'],
-      'KeyP'        : ['p',  'P',  'з',  'З'],
-      'BracketLeft' : ['[',  '{',  'х',  'Х'],
-      'BracketRight': [']',  '}',  'ъ',  'Ъ'],
-      'Delete'      : ['Del',  'Del',  'Del',  'Del'],
-      'CapsLock'    : ['Caps',  'Caps',  'Caps',  'Caps'],
-      'KeyA'        : ['a',  'A',  'ф',  'Ф'],
-      'KeyS'        : ['s',  'S',  'ы',  'Ы'],
-      'KeyD'        : ['d',  'D',  'в',  'В'],
-      'KeyF'        : ['f',  'F',  'а',  'А'],
-      'KeyG'        : ['g',  'G',  'п',  'П'],
-      'KeyH'        : ['h',  'H',  'р',  'Р'],
-      'KeyJ'        : ['j',  'J',  'о',  'О'],
-      'KeyK'        : ['k',  'K',  'л',  'Л'],
-      'KeyL'        : ['l',  'L',  'д',  'Д'],
-      'Semicolon'   : [';',  ':',  'ж',  'Ж'],
-      'Quote'       : ['\'',  '\"',  'э',  'Э'],
-      'Backslash'   : ['\\',  '|',  '\\',  '/'],
-      'Enter'       : ['Enter',  'Enter',  'Enter',  'Enter'],
-      'ShiftLeft'   : ['Shift',  'Shift',  'Shift',  'Shift'],
-      'KeyZ'        : ['z',  'Z',  'я',  'Я'],
-      'KeyX'        : ['x',  'X',  'ч',  'Ч'],
-      'KeyC'        : ['c',  'C',  'с',  'С'],
-      'KeyV'        : ['v',  'V',  'м',  'М'],
-      'KeyB'        : ['b',  'B',  'и',  'И'],
-      'KeyN'        : ['n',  'N',  'т',  'Т'],
-      'KeyM'        : ['m',  'M',  'ь',  'Ь'],
-      'Comma'       : [',',  '<',  'б',  'Б'],
-      'Period'      : ['.',  '>',  'ю',  'Ю'],
-      'Slash'       : ['/',  '?',  '.',  '.'],
-      'ShiftRight'  : ['Shift',  'Shift',  'Shift',  'Shift'],
-      'ArrowUp'     : ['ArrowUp',  'ArrowUp',  'ArrowUp',  'ArrowUp'],
-      'ControlLeft' : ['Ctrl',  'Ctrl',  'Ctrl',  'Ctrl'],
-      'AltLeft'     : ['Alt',  'Alt',  'Alt',  'Alt'],
-      'Space'       : ['Space',  'Space',  'Space',  'Space'],
-      'AltRight'    : ['Alt',  'Alt',  'Alt',  'Alt'],
-      'Done'        : ['done',  'done',  'done',  'done'],
-      'ArrowLeft'   : ['ArrowLeft',  'ArrowLeft',  'ArrowLeft',  'ArrowLeft'],
-      'ArrowDown'   : ['ArrowDown',  'ArrowDown',  'ArrowDown',  'ArrowDown'],
-      'ArrowRight'  : ['ArrowRight',  'ArrowRight',  'ArrowRight',  'ArrowRight']
-    };
+    //const this.properties.keyLayout = keyboardLayoutEnRu; 
 
     // create HTML for an icon
     const createIconHTML = iconName => {
       return `<i class='material-icons'>${iconName}</i>`;
     };
-    for(let keyCode in keyLayout) 
+    for(let keyCode in this.properties.keyLayout) 
     {
-      // choose proper value according to current lang
+      // choose proper value according to current currentLang
       
-      const key = keyLayout[keyCode][this.properties.langIndex[this.properties.lang]];
+      const key = this.properties.keyLayout[keyCode][this.properties.langIndex[this.properties.currentLang]];
       const keyElement = document.createElement('div');
       const keyContent = document.createElement('span');
       const insertLineBreak =
@@ -144,6 +85,18 @@ export const Keyboard = {
       keyElement.classList.add('key');
       // special keys
       switch (keyCode) {
+
+        case 'Lang':
+            keyElement.classList.add('special');
+            keyContent.textContent = this.properties.currentLang; 
+            keyElement.appendChild(keyContent);
+
+            keyElement.addEventListener('click', () => {
+             this._changeLanguageLayout();
+             });
+  
+        break;
+
         case 'Backspace':
           keyElement.classList.add('key_medium', 'special');
           keyContent.innerHTML = createIconHTML('backspace');
@@ -157,7 +110,7 @@ export const Keyboard = {
           break;
 
         case 'CapsLock':
-          keyElement.classList.add('key_medium', 'key_activatable','special');
+          keyElement.classList.add('key_medium','key_activatable','special');
           keyContent.innerHTML = createIconHTML('keyboard_capslock');
           keyElement.appendChild(keyContent);
           keyElement.addEventListener('click', () => {
@@ -203,6 +156,9 @@ export const Keyboard = {
 
         case 'ShiftLeft':  
         case 'ShiftRight':
+          // (keyCode === 'ShiftLeft')?          
+          //   keyElement.classList.add('key_medium','special'):
+          //   keyElement.classList.add('key_wide','special');
           keyElement.classList.add('key_medium','special');
           keyContent.textContent = key;  
           keyElement.addEventListener('mousedown', () => {
@@ -222,9 +178,11 @@ export const Keyboard = {
               keyElement.classList.remove('key_active');
             }
           });  
-               
 
         break;
+
+          
+        case 'ControlRight':
         case 'ControlLeft':
           keyElement.classList.add('key_medium','special');
           keyContent.textContent = key;  
@@ -234,20 +192,19 @@ export const Keyboard = {
         case 'AltLeft':
         case 'AltRight':
           keyElement.classList.add('key_medium','special');
-          keyContent.textContent = key;  
-          
+          keyContent.textContent = key;          
 
         break;
 
         case 'Delete':
-          keyElement.classList.add('special');
+          keyElement.classList.add('key_medium','special');
           keyContent.textContent = key;  
           
 
         break;
 
         case 'Done':
-          keyElement.classList.add('key_medium','special');
+          keyElement.classList.add('special');
           keyContent.innerHTML = createIconHTML('keyboard_hide');
 
           keyElement.addEventListener('click', () => {
@@ -294,17 +251,19 @@ export const Keyboard = {
           // });
           break;
 
-        default:
-
-          
+        default:          
           keyContent.textContent = key;
 
-          keyElement.addEventListener('click', () => {
+          keyElement.addEventListener('click', (event) => {
             
-            let charIndex = (this.properties.capsLock ^ this.properties.shift)
-              ? this.properties.langIndex[this.properties.lang+this.properties.alt]
-              : this.properties.langIndex[this.properties.lang]; 
-            this.properties.value += keyLayout[keyCode][charIndex]; 
+            // let charIndex = (this.properties.capsLock ^ this.properties.shift)
+            //   ? this.properties.langIndex[this.properties.currentLang+this.properties.alt]
+            //   : this.properties.langIndex[this.properties.currentLang]; 
+            // this.properties.value += this.properties.keyLayout[keyCode][charIndex]; 
+
+            //this.properties.value += event.target.children[0].textContent;
+            this.properties.value += keyContent.textContent;
+
             this._triggerEvent('onInput');
           });
 
@@ -330,14 +289,13 @@ export const Keyboard = {
   _toggleCapsLock() {    
     this.properties.capsLock = !this.properties.capsLock;
     
-    for (const key of this.elements.keys){
+    for (const key of this.elements.keys){      
       if(!key.classList.contains('special')) {
-        let charIndex = (this.properties.capsLock ^ this.properties.shift)
-              ? this.properties.langIndex[this.properties.lang+this.properties.alt]
-              : this.properties.langIndex[this.properties.lang];             
-
-        key.children[0].textContent = keyLayout[keyCode][charIndex];
-        
+        // caps lock only change case
+        key.children[0].textContent = 
+            (this.properties.capsLock ^ this.properties.shift) ? 
+            key.children[0].textContent.toUpperCase() : 
+            key.children[0].textContent.toLowerCase();            
       }
     }
   },
@@ -345,15 +303,50 @@ export const Keyboard = {
   _toggleShift() {    
     this.properties.shift = !this.properties.shift;
     
-    for (const key of this.elements.keys){
+    for (const key of this.elements.keys){      
       if(!key.classList.contains('special')) {
+        // choose basic or alt layout for given currentLang
+        let charIndex = (this.properties.shift)
+              ? this.properties.langIndex[this.properties.currentLang+this.properties.alt]
+              : this.properties.langIndex[this.properties.currentLang];             
+        // change case for given layout based on siht and caps
         key.children[0].textContent = 
         (this.properties.capsLock ^ this.properties.shift) ? 
-        key.children[0].textContent.toUpperCase() : 
-        key.children[0].textContent.toLowerCase();
+          this.properties.keyLayout[key.id][charIndex].toUpperCase() : 
+          this.properties.keyLayout[key.id][charIndex].toLowerCase();  
       }
     }
-  },  
+  }, 
+  
+  _changeLanguageLayout(){
+
+    this._changeLanguage();  
+
+    for (const key of this.elements.keys){      
+      if(!key.classList.contains('special')) {
+        // choose basic or alt layout for given currentLang
+        let charIndex = (this.properties.shift)
+              ? this.properties.langIndex[this.properties.currentLang] // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              : this.properties.langIndex[this.properties.currentLang];             
+        // change case for given layout based on shift and caps
+        key.children[0].textContent = 
+        (this.properties.capsLock ^ this.properties.shift) ? 
+          this.properties.keyLayout[key.id][charIndex].toUpperCase() : 
+          this.properties.keyLayout[key.id][charIndex].toLowerCase();  
+      } else if(key.id === 'Lang') {
+        // change language special key content 
+        key.children[0].textContent = this.properties.currentLang;
+      }
+    }
+  },
+  // change current language to the next from languages array
+  _changeLanguage (){
+    
+    let currentIndex = this.properties.languages.indexOf(this.properties.currentLang);
+    let nextIndex =  (currentIndex + 1 + this.properties.languages.length) % this.properties.languages.length;
+    this.properties.currentLang = this.properties.languages[nextIndex];
+    console.log(this.properties.currentLang);
+  },
 
   animateKeyDown(key){
     key.classList.add('key_active');
@@ -362,16 +355,13 @@ export const Keyboard = {
     key.classList.remove('key_active');
   },
 
-
-
   open(element, initialValue, onInput, onClose) {
     console.log('open on element ' + element);
     this.properties.value = initialValue || '';
     this.eventHandlers.onInput = onInput;
     this.eventHandlers.onClose = onClose;
     this.elements.main.classList.remove('keyboard-pannel_hidden');
-    this.properties.isOpen = true;
-    
+    this.properties.isOpen = true;    
   },
 
   close() {

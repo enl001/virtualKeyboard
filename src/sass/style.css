@@ -4,13 +4,13 @@ body {
 
 .keyboard-pannel {
   position: fixed;
-  left: 0;
+  left: 5%;
   bottom: 0;
-  width: 100%;
+  width: 90%;
   padding: 5px 0;
-  border: 2px solid rgba(33, 36, 33, 0.7);
+  border: 1px solid rgba(33, 36, 33, 0.7);
   border-radius: 20px;
-  background-color: rgba(49, 70, 49, 0.637);
+  background-color: rgba(49, 70, 49, 0.6);
   box-shadow: 0 0 50px #000001;
   user-select: none;
   transition: bottom 0.5s;
@@ -19,21 +19,24 @@ body {
   bottom: -100%;
 }
 .keyboard-pannel__keys {
-  text-align: center;
+  position: relative;
+  text-align: left;
+  padding: 30px;
 }
 
 .key {
   position: relative;
   display: inline-flex;
-  background-color: rgba(66, 85, 66, 0.534);
+  background-color: rgba(66, 85, 66, 0.5);
   color: #bcc7b8;
   border: 1px solid rgba(29, 34, 29, 0.7);
   border-radius: 4px;
-  box-shadow: 4px 4px 2px rgba(38, 43, 38, 0.7);
-  margin: 4px;
+  box-shadow: 0 1px 8px 2px rgba(38, 43, 38, 0.7);
+  margin: 5px;
   height: 45px;
-  width: 6%;
-  max-width: 45px;
+  width: 5%;
+  max-width: 55px;
+  min-width: 45px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -42,41 +45,34 @@ body {
   font-weight: 500;
 }
 .key:active, .key_active {
-  background-color: rgba(49, 65, 49, 0.8);
-  box-shadow: 2px 2px 1px rgba(23, 26, 23, 0.7);
+  background-color: rgba(49, 65, 49, 0.6);
+  box-shadow: 0 1px 4px 1px rgba(23, 26, 23, 0.7);
 }
 .key_medium {
-  width: 12%;
-  max-width: 90px;
+  width: calc(10% + 12px);
+  max-width: 122px;
+  min-width: 102px;
 }
 .key_wide {
-  width: 18%;
-  max-width: 135px;
+  width: calc(15% + 24px);
+  max-width: 189px;
+  min-width: 159px;
 }
 .key_extra-wide {
-  width: 36%;
-  max-width: 270px;
+  width: calc(20% + 36px);
+  max-width: 256px;
+  min-width: 226px;
 }
-.key_activatable:after {
-  content: "";
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-.key_activatable_active:after {
-  content: "";
-  background-color: #04ff00bd;
+.key_activatable_active {
+  color: #04ff00bd;
+  box-shadow: 0 0 8px 2px #04ff00bd;
 }
 
 .textarea {
   position: relative;
   margin-top: 10px;
   width: 100%;
-  height: 200px;
+  height: 100px;
 }
 
 .wrapper {

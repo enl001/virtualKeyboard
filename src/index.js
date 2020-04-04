@@ -4,7 +4,7 @@ import {keyboardEventHandler} from './js/keyboardEventHandler';
 
 window.addEventListener('DOMContentLoaded', function() {
   createDomTree();  
-  Keyboard.init(document.querySelector('.keyboard > .wrapper'), 'Ru');
+  Keyboard.init(document.querySelector('.keyboard > .wrapper'), 'En');
     
   //keyboardEventHandler(Keyboard);
 

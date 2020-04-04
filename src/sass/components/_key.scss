@@ -4,12 +4,13 @@
   background-color: $key-background;
   color: $key-color;
   border: 1px solid $key-border-color;
-  border-radius: 4px;
-  box-shadow: 4px 4px 2px $key-shadow;
-  margin: 4px;
+  border-radius: 4px;  
+  box-shadow: 0 1px 8px 2px $key-shadow;
+  margin: 5px;
   height: 45px;
-  width: 6%;
-  max-width: 45px;
+  width: 5%;
+  max-width: 55px;
+  min-width: 45px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -21,43 +22,36 @@
   // pressed
   &:active, &_active {
     background-color: $key-background-active;
-    box-shadow: 2px 2px 1px $key-shadow-active;
+    box-shadow: 0 1px 4px 1px $key-shadow-active;
   }
 
 
   // key width
   &_medium {
-    width: 12%;
-    max-width: 90px;
+    width: calc(10% + 12px);
+    max-width: 122px;
+    min-width: 102px;
   }
   &_wide {
-    width: 18%;
-    max-width: 135px;
+    width: calc(15% + 24px);
+    max-width: 189px;
+    min-width: 159px;
   }
 
   &_extra-wide {
-    width: 36%;
-    max-width: 270px;
+    width: calc(20% + 36px);
+    max-width: 256px;
+    min-width: 226px;
   }
 
   // dot on activatable keys
   &_activatable {
+    
+    &_active {
+      color: $key-activatable-color;
+      box-shadow: 0 0 8px 2px $key-activatable-color;
+    }  
 
-    &:after {
-      content: '';
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.4);    
-    }
-
-    &_active:after {
-      content: '';
-      background-color: $key-activatable-color;
-    }
   }
 
   
