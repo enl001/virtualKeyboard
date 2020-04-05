@@ -1,7 +1,7 @@
 
 // control keys must be the same
 export const keyboardLayoutEnRu = {       
-  'Backquote'   : ['\`', '~',  'ё',  'Ё'],
+  'Backquote'   : ['`', '~',  'ё',  'Ё'],
   'Digit1'      : ['1',  '!',  '1',  '!'],
   'Digit2'      : ['2',  '@',  '2',  '\"'],
   'Digit3'      : ['3',  '#',  '3',  '№'],
@@ -15,7 +15,7 @@ export const keyboardLayoutEnRu = {
   'Minus'       : ['-',  '_',  '-',  '_'],
   'Equal'       : ['=',  '+',  '=',  '+'],
   'Backspace'   : ['Backspace',  'Backspace',  'Backspace',  'Backspace'],
-  'Lang'   : ['Lang',  'Lang',  'Lang',  'Lang'],
+  'Lang'   : ['En',  'En',  'Рус',  'Рус'],
   'Tab'         : ['Tab',  'Tab',  'Tab',  'Tab'],
   'KeyQ'        : ['q',  'Q',  'й',  'Й'],
   'KeyW'        : ['w',  'W',  'ц',  'Ц'],
@@ -57,7 +57,8 @@ export const keyboardLayoutEnRu = {
   'Slash'       : ['/',  '?',  '.',  ','],
   'ShiftRight'  : ['Shift',  'Shift',  'Shift',  'Shift'],
   'ArrowUp'     : ['ArrowUp',  'ArrowUp',  'ArrowUp',  'ArrowUp'],
-  'IntlBackslash': ['<','>','/','|'],
+  //'IntlBackslash': ['<','>','/','|'],
+  'Led': ['led','led','led','led'],
   'ControlLeft' : ['Ctrl',  'Ctrl',  'Ctrl',  'Ctrl'],
   'AltLeft'     : ['Alt',  'Alt',  'Alt',  'Alt'],
   'Space'       : ['Space',  'Space',  'Space',  'Space'],
@@ -69,5 +70,23 @@ export const keyboardLayoutEnRu = {
   'ArrowRight'  : ['ArrowRight',  'ArrowRight',  'ArrowRight',  'ArrowRight']
 };
 
-export const brakingElementsArr = ['Lang', 'Delete', 'Enter', 'IntlBackslash'];
-export const languagesArr = ['En','Рус'];
+export const brakingElementsArr = ['Lang', 'Delete', 'Enter', 'Led'];
+export const languagesArr = ['En','Ru'];
+
+export const getLanguage = () =>
+{
+  let lang;
+  switch (navigator.language)
+    {
+      case 'ru-RU':
+        lang = 'Ru';
+        break;
+      case 'en-EN':
+        lang = 'En';
+        break;  
+      default:
+        lang = 'En';
+        break; 
+    }
+  return lang;  
+}

@@ -2,11 +2,12 @@ body {
   box-sizing: border-box;
 }
 
-.keyboard-pannel {
+.keyboard-panel {
   position: fixed;
-  left: 5%;
+  box-sizing: border-box;
+  margin: 0 auto;
   bottom: 0;
-  width: 90%;
+  width: max-content;
   padding: 5px 0;
   border: 1px solid rgba(33, 36, 33, 0.7);
   border-radius: 20px;
@@ -15,12 +16,12 @@ body {
   user-select: none;
   transition: bottom 0.5s;
 }
-.keyboard-pannel_hidden {
+.keyboard-panel_hidden {
   bottom: -100%;
 }
-.keyboard-pannel__keys {
+.keyboard-panel__keys {
   position: relative;
-  text-align: left;
+  text-align: center;
   padding: 30px;
 }
 
@@ -34,7 +35,7 @@ body {
   box-shadow: 0 1px 8px 2px rgba(38, 43, 38, 0.7);
   margin: 5px;
   height: 45px;
-  width: 5%;
+  width: 4%;
   max-width: 55px;
   min-width: 45px;
   cursor: pointer;
@@ -48,20 +49,24 @@ body {
   background-color: rgba(49, 65, 49, 0.6);
   box-shadow: 0 1px 4px 1px rgba(23, 26, 23, 0.7);
 }
+.key_led {
+  color: #0004ffc9;
+  box-shadow: 0 0 8px 2px #0004ff9d;
+}
 .key_medium {
-  width: calc(10% + 12px);
+  width: calc(8% + 12px);
   max-width: 122px;
   min-width: 102px;
 }
 .key_wide {
-  width: calc(15% + 24px);
+  width: calc(12% + 24px);
   max-width: 189px;
   min-width: 159px;
 }
 .key_extra-wide {
-  width: calc(20% + 36px);
+  width: calc(16% + 36px);
   max-width: 256px;
-  min-width: 226px;
+  min-width: 218px;
 }
 .key_activatable_active {
   color: #04ff00bd;

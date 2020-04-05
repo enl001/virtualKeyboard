@@ -2,6 +2,7 @@ import {keyboardEventHandler} from './keyboardEventHandler';
 import {keyboardLayoutEnRu} from './keyboardLayoutEnRu';
 import {brakingElementsArr} from './keyboardLayoutEnRu';
 import {languagesArr} from './keyboardLayoutEnRu';
+import {getLanguage} from './keyboardLayoutEnRu';
 
 export const Keyboard = {
   elements: {
@@ -26,23 +27,26 @@ export const Keyboard = {
     currentLang:'En',
     alt:'Alt',
     langIndex: {'En':0, 'EnAlt':1, 'Ru':2, 'RuAlt':3},
-    keyLayout : keyboardLayoutEnRu 
+    keyLayout : keyboardLayoutEnRu,
+    input: null 
   },
 
-  init(container, currentLang) {
+  init(container) {
+    // check google chrome language 
+    let lang = getLanguage();    
     // create keyboard
-    this.properties.currentLang = currentLang;
-    console.log('init with currentLang ' + currentLang);
+    this.properties.currentLang = sessionStorage.getItem('language') || lang;
+    console.log('init with currentLang ' + lang);
     this.elements.main = document.createElement('div');
     this.elements.keyboardContainer = document.createElement('div');
 
     // setup keyboard elements
     this.elements.main.classList.add(
-      'keyboard-pannel',
-      'keyboard-pannel_hidden'
+      'keyboard-panel',
+      'keyboard-panel_hidden'
     );
 
-    this.elements.keyboardContainer.classList.add('keyboard-pannel__keys');
+    this.elements.keyboardContainer.classList.add('keyboard-panel__keys');
     this.elements.keyboardContainer.appendChild(this._createKeys());
     this.elements.keys = this.elements.keyboardContainer.querySelectorAll('.key');  
 
@@ -61,6 +65,7 @@ export const Keyboard = {
           element.value = currentValue;})
       });
     });
+
     },
 
   _createKeys() {
@@ -85,6 +90,16 @@ export const Keyboard = {
       keyElement.classList.add('key');
       // special keys
       switch (keyCode) {
+        case 'Led':
+          keyElement.classList.add('special');
+          keyContent.innerHTML = createIconHTML('highlight');
+          keyElement.addEventListener('click', () => {
+            for (const key of this.elements.keys){      
+              key.classList.toggle('key_led');
+            }            
+          });
+        break;
+
 
         case 'Lang':
             keyElement.classList.add('special');
@@ -92,7 +107,7 @@ export const Keyboard = {
             keyElement.appendChild(keyContent);
 
             keyElement.addEventListener('click', () => {
-             this._changeLanguageLayout();
+             this.changeLanguageLayout();
              });
   
         break;
@@ -113,10 +128,11 @@ export const Keyboard = {
           keyElement.classList.add('key_medium','key_activatable','special');
           keyContent.innerHTML = createIconHTML('keyboard_capslock');
           keyElement.appendChild(keyContent);
-          keyElement.addEventListener('click', () => {
-            this._toggleCapsLock();
+          keyElement.addEventListener('mouseup', () => {
             
-            keyElement.classList.toggle('key_activatable_active', this.properties.capsLock);
+              this._toggleCapsLock();
+              keyElement.classList.toggle('key_activatable_active', this.properties.capsLock);
+            
           });
 
           break;
@@ -156,9 +172,7 @@ export const Keyboard = {
 
         case 'ShiftLeft':  
         case 'ShiftRight':
-          // (keyCode === 'ShiftLeft')?          
-          //   keyElement.classList.add('key_medium','special'):
-          //   keyElement.classList.add('key_wide','special');
+          
           keyElement.classList.add('key_medium','special');
           keyContent.textContent = key;  
           keyElement.addEventListener('mousedown', () => {
@@ -170,8 +184,9 @@ export const Keyboard = {
             }
             
           });   
-          keyElement.addEventListener('mouseup', () => { 
-            // cant press shift if it is pressed already
+          keyElement.addEventListener('mouseup', (event) => { 
+            
+            // cant press shift if it is pressed already            
             if (this.properties.shiftDown) {
               this._toggleShift();
               this.properties.shiftDown = false;
@@ -255,18 +270,18 @@ export const Keyboard = {
           keyContent.textContent = key;
 
           keyElement.addEventListener('click', (event) => {
-            
-            // let charIndex = (this.properties.capsLock ^ this.properties.shift)
-            //   ? this.properties.langIndex[this.properties.currentLang+this.properties.alt]
-            //   : this.properties.langIndex[this.properties.currentLang]; 
-            // this.properties.value += this.properties.keyLayout[keyCode][charIndex]; 
 
-            //this.properties.value += event.target.children[0].textContent;
             this.properties.value += keyContent.textContent;
 
             this._triggerEvent('onInput');
+
+            //this.properties.input.focus();
+            // this.properties.input.setSelectionRange(this.properties.value.length-1,
+            //    this.properties.value.length-1);
+            // console.log(this.properties.input.selectionStart);
           });
 
+          
           break;
       }
       keyElement.setAttribute('id',keyCode);
@@ -309,7 +324,7 @@ export const Keyboard = {
         let charIndex = (this.properties.shift)
               ? this.properties.langIndex[this.properties.currentLang+this.properties.alt]
               : this.properties.langIndex[this.properties.currentLang];             
-        // change case for given layout based on siht and caps
+        // change case for given layout based on shift and caps
         key.children[0].textContent = 
         (this.properties.capsLock ^ this.properties.shift) ? 
           this.properties.keyLayout[key.id][charIndex].toUpperCase() : 
@@ -318,16 +333,19 @@ export const Keyboard = {
     }
   }, 
   
-  _changeLanguageLayout(){
+  changeLanguageLayout(){
 
     this._changeLanguage();  
+    sessionStorage.setItem('language', this.properties.currentLang);
 
     for (const key of this.elements.keys){      
-      if(!key.classList.contains('special')) {
-        // choose basic or alt layout for given currentLang
+      // choose basic or alt layout for given currentLang
         let charIndex = (this.properties.shift)
-              ? this.properties.langIndex[this.properties.currentLang] // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-              : this.properties.langIndex[this.properties.currentLang];             
+              ? this.properties.langIndex[this.properties.currentLang + this.properties.alt] // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              : this.properties.langIndex[this.properties.currentLang]; 
+        
+      if(!key.classList.contains('special')) {
+                              
         // change case for given layout based on shift and caps
         key.children[0].textContent = 
         (this.properties.capsLock ^ this.properties.shift) ? 
@@ -335,7 +353,7 @@ export const Keyboard = {
           this.properties.keyLayout[key.id][charIndex].toLowerCase();  
       } else if(key.id === 'Lang') {
         // change language special key content 
-        key.children[0].textContent = this.properties.currentLang;
+        key.children[0].textContent = this.properties.keyLayout[key.id][charIndex];
       }
     }
   },
@@ -345,7 +363,7 @@ export const Keyboard = {
     let currentIndex = this.properties.languages.indexOf(this.properties.currentLang);
     let nextIndex =  (currentIndex + 1 + this.properties.languages.length) % this.properties.languages.length;
     this.properties.currentLang = this.properties.languages[nextIndex];
-    console.log(this.properties.currentLang);
+    
   },
 
   animateKeyDown(key){
@@ -356,11 +374,13 @@ export const Keyboard = {
   },
 
   open(element, initialValue, onInput, onClose) {
+    this.properties.input = element;
     console.log('open on element ' + element);
+    console.log(element.selectionStart);
     this.properties.value = initialValue || '';
     this.eventHandlers.onInput = onInput;
     this.eventHandlers.onClose = onClose;
-    this.elements.main.classList.remove('keyboard-pannel_hidden');
+    this.elements.main.classList.remove('keyboard-panel_hidden');
     this.properties.isOpen = true;    
   },
 
@@ -369,7 +389,7 @@ export const Keyboard = {
     this.properties.value = '';
     this.eventHandlers.onInput = null;
     this.eventHandlers.onClose = null;
-    this.elements.main.classList.add('keyboard-pannel_hidden');
+    this.elements.main.classList.add('keyboard-panel_hidden');
     this.properties.isOpen = false;
   }
 };

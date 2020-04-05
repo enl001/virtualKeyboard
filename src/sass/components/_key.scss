@@ -8,7 +8,7 @@
   box-shadow: 0 1px 8px 2px $key-shadow;
   margin: 5px;
   height: 45px;
-  width: 5%;
+  width: 4%;
   max-width: 55px;
   min-width: 45px;
   cursor: pointer;
@@ -25,24 +25,29 @@
     box-shadow: 0 1px 4px 1px $key-shadow-active;
   }
 
+  &_led {
+    color: $key-led-color;
+    box-shadow: 0 0 8px 2px $key-led-shadow-color;
+  }
 
   // key width
   &_medium {
-    width: calc(10% + 12px);
+    width: calc(8% + 12px);
     max-width: 122px;
     min-width: 102px;
   }
   &_wide {
-    width: calc(15% + 24px);
+    width: calc(12% + 24px);
     max-width: 189px;
     min-width: 159px;
   }
 
   &_extra-wide {
-    width: calc(20% + 36px);
+    width: calc(16% + 36px);
     max-width: 256px;
-    min-width: 226px;
+    min-width: 218px;
   }
+
 
   // dot on activatable keys
   &_activatable {

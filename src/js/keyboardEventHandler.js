@@ -1,6 +1,6 @@
 export const keyboardEventHandler = (keyboard) => {
   
-  window.addEventListener('keydown', (event) => {
+  document.addEventListener('keydown', (event) => {
   if(keyboard.properties.isOpen) {
     
     event.preventDefault();    
@@ -12,11 +12,17 @@ export const keyboardEventHandler = (keyboard) => {
         case 'ShiftLeft' :
         // to prevent multiple event triggering
         if(!keyboard.properties.shift) {
-          element.dispatchEvent(new Event('mousedown'));
+          
+          if (event.altKey) 
+          {
+            keyboard.changeLanguageLayout();
+          }  
+
+           element.dispatchEvent(new Event('mousedown'));
         }
           break;
 
-        default:
+        default:          
           element.dispatchEvent(new Event('click'));
           break;
 
@@ -26,7 +32,7 @@ export const keyboardEventHandler = (keyboard) => {
 
   }
   });
-  window.addEventListener('keyup', (event) => {
+  document.addEventListener('keyup', (event) => {
     if(keyboard.properties.isOpen) {
       event.preventDefault();      
       let element = document.getElementById(event.code);
@@ -34,10 +40,13 @@ export const keyboardEventHandler = (keyboard) => {
         keyboard.animateKeyUp(element);  
         switch (element.id) {
           case 'ShiftRight' :
-          case 'ShiftLeft' :
+          case 'ShiftLeft' :  
+
             element.dispatchEvent(new Event('mouseup'));
             break;
-  
+            case 'CapsLock':
+              element.dispatchEvent(new Event('mouseup'));
+            break;  
           default:
             
             break;
