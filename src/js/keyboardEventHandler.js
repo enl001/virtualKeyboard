@@ -2,18 +2,19 @@ export const keyboardEventHandler = (keyboard) => {
   
   document.addEventListener('keydown', (event) => {
   if(keyboard.properties.isOpen) {
-    
     event.preventDefault();    
     let element = document.getElementById(event.code);
     if(element) {       
       keyboard.animateKeyDown(element);   
+      
       switch (element.id) {
         case 'ShiftRight' :
-        case 'ShiftLeft' :
+        case 'ShiftLeft' :   
+
         // to prevent multiple event triggering
         if(!keyboard.properties.shift) {
           
-          if (event.altKey) 
+          if (event.ctrlKey) 
           {
             keyboard.changeLanguageLayout();
           }  
