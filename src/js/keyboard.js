@@ -228,7 +228,7 @@ export const Keyboard = {
           keyContent.innerHTML = createIconHTML('keyboard_arrow_up');
 
           keyElement.addEventListener('click', () => {
-            this._pastSymbol('');
+            this._pastSymbol('↑');
           });
           break;
 
@@ -253,7 +253,7 @@ export const Keyboard = {
           keyContent.innerHTML = createIconHTML('keyboard_arrow_down');
 
           keyElement.addEventListener('click', () => {
-            this._pastSymbol('&darr;');
+            this._pastSymbol('↓');
           });
           break;
 

@@ -1,13 +1,16 @@
 body {
   box-sizing: border-box;
+  width: 100%;
+  position: relative;
 }
 
 .keyboard-panel {
+  display: block;
   position: fixed;
   box-sizing: border-box;
-  margin: 0 auto;
+  left: calc(50% - 467px);
   bottom: 0;
-  width: max-content;
+  width: 934px;
   padding: 5px 0;
   border: 1px solid rgba(33, 36, 33, 0.7);
   border-radius: 20px;
@@ -22,7 +25,8 @@ body {
 .keyboard-panel__keys {
   position: relative;
   text-align: center;
-  padding: 30px;
+  width: fit-content;
+  padding: 25px;
 }
 
 .key {
@@ -34,10 +38,10 @@ body {
   border-radius: 4px;
   box-shadow: 0 1px 8px 2px rgba(38, 43, 38, 0.7);
   margin: 5px;
-  height: 45px;
+  height: 43px;
   width: 4%;
-  max-width: 55px;
-  min-width: 45px;
+  max-width: 53px;
+  min-width: 43px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -56,17 +60,12 @@ body {
 .key_medium {
   width: calc(8% + 12px);
   max-width: 122px;
-  min-width: 102px;
-}
-.key_wide {
-  width: calc(12% + 24px);
-  max-width: 189px;
-  min-width: 159px;
+  min-width: 98px;
 }
 .key_extra-wide {
   width: calc(16% + 36px);
   max-width: 256px;
-  min-width: 218px;
+  min-width: 210px;
 }
 .key_activatable_active {
   color: #04ff00bd;
@@ -74,16 +73,19 @@ body {
 }
 
 .textarea {
+  display: block;
   position: relative;
+  margin: 0 auto;
   margin-top: 10px;
-  width: 100%;
+  width: 80%;
   height: 100px;
 }
 
 .wrapper {
-  max-width: 1024px;
+  position: relative;
+  width: 90%;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 30px;
 }
 
 /*# sourceMappingURL=style.css.map */
