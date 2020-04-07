@@ -1,0 +1,29 @@
+.keyboard-panel{
+  display: block;
+  position: fixed;
+  box-sizing: border-box;
+  left: calc(50% - 467px);
+  bottom: 0;
+  width: 934px;  
+  padding: 5px 0;
+  border: 1px solid $keyboard-border-color;
+  border-radius: 20px;
+  background-color: $keyboard-background;
+  box-shadow: 0 0 50px $keyboard-shadow;
+  user-select: none;
+  transition: bottom 0.5s;
+
+  &_hidden {
+    bottom: -100%;
+  }
+
+  &__keys{ 
+    position: relative; 
+    text-align: center;
+    width: fit-content;
+    padding: 25px;
+  }
+}
+
+
+

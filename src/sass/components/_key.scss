@@ -1,0 +1,62 @@
+.key {
+  position: relative;
+  display: inline-flex;
+  background-color: $key-background;
+  color: $key-color;
+  border: 1px solid $key-border-color;
+  border-radius: 4px;  
+  box-shadow: 0 1px 8px 2px $key-shadow;
+  margin: 5px;
+  height: 43px;
+  width: 4%;
+  max-width: 53px;
+  min-width: 43px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+
+  font-size: 25px;
+  font-weight: 500;
+
+
+
+  // pressed
+  &:active, &_active {
+    background-color: $key-background-active;
+    box-shadow: 0 1px 4px 1px $key-shadow-active;
+  }
+
+  &_led {
+    color: $key-led-color;
+    box-shadow: 0 0 8px 2px $key-led-shadow-color;
+  }
+
+  // key width
+  &_medium {
+    width: calc(8% + 12px);
+    max-width: 122px;
+    min-width: 98px;
+  }
+  
+  &_extra-wide {
+    width: calc(16% + 36px);
+    max-width: 256px;
+    min-width: 210px;
+  }
+
+
+  // dot on activatable keys
+  &_activatable {
+    
+    &_active {
+      color: $key-activatable-color;
+      box-shadow: 0 0 8px 2px $key-activatable-color;
+    }  
+
+  }
+
+  
+
+  
+}
