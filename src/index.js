@@ -1,22 +1,7 @@
-import {Keyboard} from './js/keyboard';
-import {createDomTree} from './js/createDomTree';
-import {keyboardEventHandler} from './js/keyboardEventHandler';
+import { Keyboard } from './js/keyboard';
+import { createDomTree } from './js/createDomTree';
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', () => {
   createDomTree();
-  
-  
   Keyboard.init(document.querySelector('.keyboard > .wrapper'));
-    
-  //keyboardEventHandler(Keyboard);
-
-  // Keyboard.open('dcode', function (currentValue) {console.log('value changed: ' + currentValue);},
-  // function (currentValue) {console.log('keyboard closed! Finishen value: ' + 
-  // currentValue);});
 });
-
-
-
-
-
-//https://www.youtube.com/watch?v=N3cq0BHDMOY
